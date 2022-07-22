@@ -4,11 +4,29 @@ import path from 'path';
 import sharp from 'sharp';
 
 class ImageController {
-   public static guide(req: Request, res: Response) {
-      res.status(200).json({
+   public static guide(req: Request, res: Response): Response {
+      return res.status(200).json({
          URL: 'http://localhost:3000/images?filename=palmtunnel&width=200&height=200'
       });
    }
+
+   /****************************************************************/
+   private static checkThumbImageExist(
+      imageName: string,
+      width: number,
+      height: number
+   ): string | null {
+      const imagePath: string = path.join(
+         __dirname,
+         `../../assets/images/${imageName}-${width}-${height}.jpg`
+      );
+      let thumbImagePath = null;
+      if (fs.existsSync(imagePath)) {
+         thumbImagePath = imagePath;
+      }
+      return thumbImagePath;
+   }
+   /****************************************************************/
 
    private static getImagePath(imageName: string): string {
       const imagePath: string = path.join(
@@ -35,15 +53,17 @@ class ImageController {
    ): Promise<string> {
       const filePath = path.join(
          __dirname,
-         '../../assets/thumb/' + imageName + '.jpg'
+         `../../assets/thumb/${imageName}-${width}-${height}.jpg`
       );
 
-      try {
-         await sharp(imagePath)
-            .resize(+width, +height)
-            .toFile(filePath);
-      } catch (error) {
-         console.log(error);
+      if (!this.checkThumbImageExist(imageName, width, height)) {
+         try {
+            await sharp(imagePath)
+               .resize(+width, +height)
+               .toFile(filePath);
+         } catch (error) {
+            console.log(error);
+         }
       }
       return filePath;
    }

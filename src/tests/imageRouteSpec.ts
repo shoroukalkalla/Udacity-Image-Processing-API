@@ -13,7 +13,7 @@ describe('Image Endpoint', () => {
    describe('Image does not exist', () => {
       it('get /images', async () => {
          const res = await request.get('/images');
-         expect(res.status).toBe(404);
+         expect(res.status).toBe(400);
       });
       it('get /images?filename=test', async () => {
          const res = await request.get('/images?filename=test');

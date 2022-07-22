@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 
 class QueryValidator {
-   public static validate(req: Request, res: Response, next: NextFunction) {
+   public static validate(
+      req: Request,
+      res: Response,
+      next: NextFunction
+   ): Response | void {
       const width = req.query.width;
       const height = req.query.height;
       const filename = req.query.filename;
