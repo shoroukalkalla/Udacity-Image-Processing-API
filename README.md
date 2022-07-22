@@ -31,6 +31,8 @@ Open the browser at:
 
 ```
 http://localhost:3000/
+http://localhost:3000/images?filename=palmtunnel&width=200&height=200
+
 ```
 
 <hr>
@@ -44,9 +46,3 @@ npm test
 
 ```
 
-> Endpoint:
-
-```bash
-http://localhost:3000/
-
-```
